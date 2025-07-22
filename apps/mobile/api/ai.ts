@@ -1,3 +1,4 @@
+// File: apps/mobile/api/ai.ts
 import { useStore } from '../lib/store';
 import Toast from 'react-native-toast-message';
 import { BACKEND_URL } from '@env';
@@ -27,7 +28,6 @@ export const sendAiChatMessage = async (chatId: string, message: string): Promis
       const errorData = await response.json();
       throw new Error(errorData.error || 'Failed to send message to AI');
     }
-    // The response is handled by the realtime subscription, so we don't need to process the body here.
   } catch (error: any) {
     console.error('API Error in sendAiChatMessage:', error);
     Toast.show({ type: 'error', text1: 'AI Connection Error', text2: error.message });

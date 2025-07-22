@@ -1,3 +1,4 @@
+// File: apps/mobile/lib/supabase.ts
 import 'react-native-url-polyfill/auto';
 import { createClient } from '@supabase/supabase-js';
 import { EXPO_PUBLIC_SUPABASE_URL, EXPO_PUBLIC_SUPABASE_KEY } from '@env';

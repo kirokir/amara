@@ -1,0 +1,21 @@
+{
+  "name": "amara-app-monorepo",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Amara: AI-mediated space for relationship wellness",
+  "scripts": {
+    "mobile": "pnpm --filter mobile",
+    "backend": "pnpm --filter backend",
+    "dev": "pnpm --parallel --stream dev"
+  },
+  "keywords": [
+    "react-native",
+    "expo",
+    "supabase",
+    "ollama",
+    "ai",
+    "typescript"
+  ],
+  "author": "",
+  "license": "ISC"
+}

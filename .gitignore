@@ -47,3 +47,8 @@ coverage/
 # IDE specific
 .idea/
 .vscode/
+
+# Python Virtual Environment & Cache
+.venv/
+__pycache__/
+*.pyc
