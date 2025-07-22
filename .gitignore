@@ -1,0 +1,49 @@
+# === AMARA APP .GITIGNORE ===
+
+# General
+.DS_Store
+*.local
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Node Dependencies - THIS IS THE MOST IMPORTANT PART
+node_modules/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Sensitive Environment Variables
+.env
+.env.*
+!/.env.example
+
+# Mobile App (Expo)
+/apps/mobile/node_modules
+/apps/mobile/.expo/
+/apps/mobile/web-build/
+/apps/mobile/ios/
+/apps/mobile/android/
+# The keystore is sensitive and should be managed by EAS Secrets, not git
+/apps/mobile/amara.keystore
+/apps/mobile/.env
+
+# Backend
+/services/backend/node_modules
+/services/backend/dist/
+/services/backend/.env
+
+# Supabase (ignoring temp files if Supabase CLI is used later)
+/services/backend/supabase/.temp/
+/services/backend/supabase/db/
+/services/backend/supabase/functions/.dist/
+
+# IDE specific
+.idea/
+.vscode/
