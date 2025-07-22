@@ -1,4 +1,3 @@
-// File: apps/mobile/hooks/useAuth.ts
 import { useStore } from '../lib/store';
 
 export const useAuth = () => {

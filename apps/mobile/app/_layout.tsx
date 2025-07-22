@@ -1,58 +1,57 @@
-// File: apps/mobile/app/_layout.tsx
-import React, { useEffect } from 'react';
-import { Slot, useRouter, useSegments } from 'expo-router';
-import { useFonts, Inter_400Regular, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
-import * as SplashScreen from 'expo-splash-screen';
-import { useAuth } from '../hooks/useAuth';
-import Toast from 'react-native-toast-message';
+// File: apps/mobile/app/(tabs)/_layout.tsx
+import React from 'react';
+import { Tabs, useRouter } from 'expo-router';
+import { Ionicons } from '@expo/vector-icons';
+import { ColorTheme } from '../../constants/ColorTheme';
+import { TouchableOpacity } from 'react-native';
 
-SplashScreen.preventAutoHideAsync();
-
-function RootLayoutNav() {
-  const { isAuthenticated, isLoading } = useAuth();
-  const segments = useSegments();
+export default function TabLayout() {
   const router = useRouter();
 
-  useEffect(() => {
-    if (isLoading) return;
-
-    const inAuthGroup = segments[0] === '(auth)';
-
-    if (isAuthenticated && inAuthGroup) {
-      router.replace('/(tabs)/couple_chat');
-    } else if (!isAuthenticated && !inAuthGroup) {
-      router.replace('/(auth)/login');
-    }
-  }, [isAuthenticated, isLoading, segments]);
-
-  useEffect(() => {
-    if (!isLoading) {
-      SplashScreen.hideAsync();
-    }
-  }, [isLoading]);
-
-  if (isLoading) {
-    return null;
-  }
-
-  return <Slot />;
-}
-
-export default function RootLayout() {
-  const [fontsLoaded, fontError] = useFonts({
-    Inter_400Regular,
-    Inter_600SemiBold,
-    Inter_700Bold,
-  });
-
-  if (!fontsLoaded && !fontError) {
-    return null;
-  }
-
   return (
-    <>
-      <RootLayoutNav />
-      <Toast />
-    </>
+    <Tabs
+      screenOptions={{
+        tabBarActiveTintColor: ColorTheme.violet,
+        tabBarInactiveTintColor: ColorTheme.mediumText,
+        tabBarStyle: { backgroundColor: ColorTheme.white },
+        headerStyle: { backgroundColor: ColorTheme.white },
+        headerTitleStyle: { fontFamily: 'Inter_600SemiBold', color: ColorTheme.indigo },
+        headerShadowVisible: false,
+        headerRight: () => (
+          <TouchableOpacity onPress={() => router.push('/(settings)/partner')} style={{ marginRight: 15 }}>
+            <Ionicons name="settings-outline" size={24} color={ColorTheme.indigo} />
+          </TouchableOpacity>
+        ),
+      }}
+    >
+      <Tabs.Screen
+        name="couple_chat"
+        options={{
+          title: 'Couple Chat',
+          tabBarIcon: ({ color, size }) => <Ionicons name="chatbubbles-outline" color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="amara_chat"
+        options={{
+          title: 'Amara AI',
+          tabBarIcon: ({ color, size }) => <Ionicons name="sparkles-outline" color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="journal"
+        options={{
+          title: 'Journal',
+          tabBarIcon: ({ color, size }) => <Ionicons name="book-outline" color={color} size={size} />,
+        }}
+      />
+      <Tabs.Screen
+        name="tools"
+        options={{
+          title: 'Tools',
+          tabBarIcon: ({ color, size }) => <Ionicons name="construct-outline" color={color} size={size} />,
+        }}
+      />
+    </Tabs>
   );
 }

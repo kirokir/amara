@@ -1,62 +1,57 @@
 import React from 'react';
-import { Tabs, useRouter } from 'expo-router';
-import { Ionicons } from '@expo/vector-icons';
-import { ColorTheme } from '../../constants/ColorTheme';
-import { TouchableOpacity } from 'react-native';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+import { Link, Tabs } from 'expo-router';
+import { Pressable } from 'react-native';
+
+import Colors from '@/constants/Colors';
+import { useColorScheme } from '@/components/useColorScheme';
+import { useClientOnlyValue } from '@/components/useClientOnlyValue';
+
+// You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
+function TabBarIcon(props: {
+  name: React.ComponentProps<typeof FontAwesome>['name'];
+  color: string;
+}) {
+  return <FontAwesome size={28} style={{ marginBottom: -3 }} {...props} />;
+}
 
 export default function TabLayout() {
-  const router = useRouter();
+  const colorScheme = useColorScheme();
 
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: ColorTheme.violet,
-        tabBarInactiveTintColor: ColorTheme.mediumText,
-        tabBarStyle: {
-          backgroundColor: ColorTheme.white,
-          borderTopColor: '#E0E0E0',
-        },
-        headerStyle: {
-          backgroundColor: ColorTheme.white,
-        },
-        headerTitleStyle: {
-          fontFamily: 'Inter_600SemiBold',
-          color: ColorTheme.indigo,
-        },
-        headerShadowVisible: false,
-        headerRight: () => (
-          <TouchableOpacity onPress={() => router.push('/(settings)/partner')} style={{ marginRight: 15 }}>
-            <Ionicons name="person-add-outline" size={24} color={ColorTheme.indigo} />
-          </TouchableOpacity>
-        ),
-      }}
-    >
+        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        // Disable the static render of the header on web
+        // to prevent a hydration error in React Navigation v6.
+        headerShown: useClientOnlyValue(false, true),
+      }}>
       <Tabs.Screen
-        name="couple_chat"
+        name="index"
         options={{
-          title: 'Couple Chat',
-          tabBarIcon: ({ color, size }) => <Ionicons name="chatbubbles-outline" color={color} size={size} />,
+          title: 'Tab One',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
+          headerRight: () => (
+            <Link href="/modal" asChild>
+              <Pressable>
+                {({ pressed }) => (
+                  <FontAwesome
+                    name="info-circle"
+                    size={25}
+                    color={Colors[colorScheme ?? 'light'].text}
+                    style={{ marginRight: 15, opacity: pressed ? 0.5 : 1 }}
+                  />
+                )}
+              </Pressable>
+            </Link>
+          ),
         }}
       />
       <Tabs.Screen
-        name="amara_chat"
+        name="two"
         options={{
-          title: 'Amara AI',
-          tabBarIcon: ({ color, size }) => <Ionicons name="sparkles-outline" color={color} size={size} />,
-        }}
-      />
-      <Tabs.Screen
-        name="journal"
-        options={{
-          title: 'Journal',
-          tabBarIcon: ({ color, size }) => <Ionicons name="book-outline" color={color} size={size} />,
-        }}
-      />
-      <Tabs.Screen
-        name="tools"
-        options={{
-          title: 'Tools',
-          tabBarIcon: ({ color, size }) => <Ionicons name="construct-outline" color={color} size={size} />,
+          title: 'Tab Two',
+          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
         }}
       />
     </Tabs>
